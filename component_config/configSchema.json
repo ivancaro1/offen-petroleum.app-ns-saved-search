@@ -16,6 +16,7 @@
   "properties": {
     "keboola_token": {
       "type": "string",
+      "format": "password",
       "title": "Keboola Token",
       "description": "Authentication token for accessing Keboola services. Keep this token secure as it grants access to your Keboola resources.",
       "propertyOrder": 1
@@ -23,7 +24,7 @@
     "bucket_id": {
       "type": "string",
       "title": "Bucket ID",
-      "description": "Identifies a specific storage container (bucket) within keboola.",
+      "description": "Identifies a specific storage container (bucket) within keboola. Bucket_id  is  'in.c-' + bucket name",
       "propertyOrder": 2
     },
     "table_name": {
@@ -34,6 +35,7 @@
     },
     "ns_client_key": {
       "type": "string",
+      "format": "password",
       "title": "Client Key",
       "description": "OAuth client key used for secure authentication with NetSuite's API.",
       "propertyOrder": 4
@@ -47,6 +49,7 @@
     },
     "ns_resource_owner_key": {
       "type": "string",
+      "format": "password",
       "title": "Resource Owner Key",
       "description": "OAuth resource owner key for secure authentication with NetSuite's API.",
       "propertyOrder": 6
