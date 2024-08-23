@@ -1,1 +1,2 @@
-This is component connects to Netsuite, download and process data from a saved search and load it into Keboola. 
+This is component connects to Netsuite, download and process data from a saved search using saved search ID  and load it into Keboola. 
+If the destination table does not exist, it will be created. Otherwise, the data will be loaded  into the existing table, not incrementally..

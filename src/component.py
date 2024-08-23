@@ -141,7 +141,7 @@ def get_keboola_tables(keboola_token, bucket_id, include=""):
         return table_names
     else:
         logging.error(f'Failed to retrieve tables: {response.text}')
-        return True
+        return None
 
 
 
@@ -157,7 +157,6 @@ def truncate_keboola_table(keboola_token, keboola_table_id):
         logging.info('Table truncated successfully!')
     else:
         logging.error(f'Failed to truncate table: {response.text}')
-    return True
     
 def load_to_keboola(df, keboola_token, keboola_table_id, chunk_size=2500):
     truncate_keboola_table(keboola_token, keboola_table_id)
@@ -191,7 +190,7 @@ def load_to_keboola(df, keboola_token, keboola_table_id, chunk_size=2500):
         
         else:
             logging.error(f'Failed to upload data chunk {start // chunk_size + 1}: {response.text}')
-        return True
+
     
 def fetch_netsuite_data(client_key, client_secret, resource_owner_key, resource_owner_secret, realm, searchID,restlet_url):
     session = OAuth1Session(
