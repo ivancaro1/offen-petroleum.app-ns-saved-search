@@ -34,7 +34,7 @@ NS_RESOURCE_OWNER_KEY = 'ns_resource_owner_key'
 NS_RESOURCE_OWNER_SECRET ='ns_resource_owner_secret'
 NS_REALM ='ns_realm'
 NS_RESTLET_URL='ns_restlet_url'
-NS_SEARCHID = 'ns_SearchID'
+NS_SEARCHID = 'ns_searchID'
 
 # list of mandatory parameters => if some is missing,
 # component will fail with readable message on initialization.
