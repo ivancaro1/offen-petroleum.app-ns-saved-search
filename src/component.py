@@ -34,11 +34,11 @@ NS_RESOURCE_OWNER_KEY = 'ns_resource_owner_key'
 NS_RESOURCE_OWNER_SECRET ='ns_resource_owner_secret'
 NS_REALM ='ns_realm'
 NS_RESTLET_URL='ns_restlet_url'
-NS_SEARCH_ID = 'ns_SearchID'
+NS_SEARCHID = 'ns_SearchID'
 
 # list of mandatory parameters => if some is missing,
 # component will fail with readable message on initialization.
-REQUIRED_PARAMETERS = [KEBOOLA_TOKEN,BUCKET_ID,TABLE_NAME,NS_CLIENT_KEY, NS_CLIENT_SECRET,NS_RESOURCE_OWNER_KEY, NS_RESOURCE_OWNER_SECRET,NS_REALM,NS_RESTLET_URL,NS_SEARCH_ID]
+REQUIRED_PARAMETERS = [KEBOOLA_TOKEN,BUCKET_ID,TABLE_NAME,NS_CLIENT_KEY, NS_CLIENT_SECRET,NS_RESOURCE_OWNER_KEY, NS_RESOURCE_OWNER_SECRET,NS_REALM,NS_RESTLET_URL,NS_SEARCHID]
 REQUIRED_IMAGE_PARS = []
 
 
@@ -47,7 +47,6 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 logger = logging.getLogger(__name__)
-
 
 def create_keboola_table_direct(df, keboola_token, bucket_id, table_name):
     # Convert the DataFrame to a CSV string
@@ -78,7 +77,7 @@ def create_keboola_table_direct(df, keboola_token, bucket_id, table_name):
     prepare_response = requests.post(prepare_file_url, headers=headers, data=json.dumps(prepare_payload))
     
     if prepare_response.status_code != 200:
-        logging.error(f'Failed to prepare file upload: {prepare_response.text}')
+        print(f'Failed to prepare file upload: {prepare_response.text}')
         return None
     
     # Get the necessary parameters from the response
@@ -103,12 +102,31 @@ def create_keboola_table_direct(df, keboola_token, bucket_id, table_name):
             ACL=upload_params['acl']
         )
         
-        logging.info(f'CSV file uploaded successfully with file ID: {file_id}')
+        print(f'CSV file uploaded successfully with file ID: {file_id}')
         
     except NoCredentialsError:
-        logging.error("Credentials not available")
-        return True
+        print("Credentials not available")
+        return None
 
+    # Step 3: Use the uploaded file to create the table in Keboola
+    create_table_url = f'https://connection.keboola.com/v2/storage/buckets/{bucket_id}/tables-async'
+    
+    # Define the request payload
+    values = {
+        "dataFileId": file_id,  # Reference the uploaded file ID
+        "name": table_name,
+        "delimiter": ",",
+        "enclosure": "\""
+    }
+    
+    create_table_response = requests.post(create_table_url, headers=headers, data=json.dumps(values))
+    
+    if create_table_response.status_code == 202:
+        print(f'Table {table_name} created successfully!')
+        return create_table_response.json()  # Return the response details
+    else:
+        print(f'Failed to create table: {create_table_response.text}')
+        return None
 
 
 def get_keboola_tables(keboola_token, bucket_id, include=""):
@@ -175,9 +193,9 @@ def load_to_keboola(df, keboola_token, keboola_table_id, chunk_size=2500):
             logging.error(f'Failed to upload data chunk {start // chunk_size + 1}: {response.text}')
         return True
     
-def fetch_netsuite_data(cleint_key, client_secret, resource_owner_key, resource_owner_secret, realm, searchID,restlet_url):
+def fetch_netsuite_data(client_key, client_secret, resource_owner_key, resource_owner_secret, realm, searchID,restlet_url):
     session = OAuth1Session(
-        client_key=cleint_key,
+        client_key=client_key,
         client_secret=client_secret,
         resource_owner_key=resource_owner_key,
         resource_owner_secret=resource_owner_secret,
@@ -212,7 +230,7 @@ class Component(ComponentBase):
         resource_owner_key = self.configuration.parameters.get(NS_RESOURCE_OWNER_KEY)
         resource_owner_secret = self.configuration.parameters.get(NS_RESOURCE_OWNER_SECRET)
         realm = self.configuration.parameters.get(NS_REALM)
-        searchID = self.configuration.parameters.get(NS_SEARCH_ID)
+        searchID = self.configuration.parameters.get(NS_SEARCHID)
         restlet_url=self.configuration.parameters.get(NS_RESTLET_URL)
         bucket_id = self.configuration.parameters.get(BUCKET_ID)
         keboola_token = self.configuration.parameters.get(KEBOOLA_TOKEN)
@@ -255,7 +273,7 @@ class Component(ComponentBase):
 
         # Upload data to Keboola
         if df is not None:
-            table_names = get_keboola_tables(keboola_token, bucket_id)
+            table_names = get_keboola_tables(keboola_token=keboola_token, bucket_id=bucket_id)
             if table_name in table_names:
                 load_to_keboola(df, keboola_token = keboola_token, keboola_table_id=keboola_table_id, chunk_size=2500)
             else:
