@@ -1,0 +1,11 @@
+keboola.component==1.4.0
+keboola.utils
+keboola.http-client
+mock
+freezegun
+xmltodict
+logging_gelf
+pandas
+requests-oauthlib
+boto3
+botocore

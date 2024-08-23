@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "title": "extractor configuration",
+  "required": [
+    "keboola_token",
+    "bucket_id",
+    "table_name",
+    "ns_client_key",
+    "ns_client_secret",
+    "ns_resource_owner_key",
+    "ns_resource_owner_secret",
+    "ns_realm",
+    "ns_restlet_url",
+    "ns_searchID"
+  ],
+  "properties": {
+    "keboola_token": {
+      "type": "string",
+      "title": "Keboola Token",
+      "description": "Authentication token for accessing Keboola services. Keep this token secure as it grants access to your Keboola resources.",
+      "propertyOrder": 1
+    },
+    "bucket_id": {
+      "type": "string",
+      "title": "Bucket ID",
+      "description": "Identifies a specific storage container (bucket) within keboola.",
+      "propertyOrder": 2
+    },
+    "table_name": {
+      "type": "string",
+      "title": "Table Name",
+      "description": "Specifies the name of a data table within the bucket.",
+      "propertyOrder": 3
+    },
+    "ns_client_key": {
+      "type": "string",
+      "title": "Client Key",
+      "description": "OAuth client key used for secure authentication with NetSuite's API.",
+      "propertyOrder": 4
+    },
+    "ns_client_secret": {
+      "type": "string",
+      "format": "password",
+      "title": "Client Secret",
+      "description": "OAuth client secret used for secure authentication with NetSuite's API.",
+      "propertyOrder": 5
+    },
+    "ns_resource_owner_key": {
+      "type": "string",
+      "title": "Resource Owner Key",
+      "description": "OAuth resource owner key for secure authentication with NetSuite's API.",
+      "propertyOrder": 6
+    },
+    "ns_resource_owner_secret": {
+      "type": "string",
+      "format": "password",
+      "title": "Resource Owner Secret",
+      "description": "OAuth resource owner secret for secure authentication with NetSuite's API.",
+      "propertyOrder": 7
+    },
+    "ns_realm": {
+      "type": "string",
+      "title": "Realm",
+      "description": "Identifies your specific NetSuite account.",
+      "propertyOrder": 8
+    },
+    "ns_restlet_url": {
+      "type": "string",
+      "title": "RESTlet URL",
+      "description": "The URL of a NetSuite RESTlet, a custom script deployed on NetSuite that handles API requests.",
+      "propertyOrder": 9
+    },
+    "ns_searchID": {
+      "type": "string",
+      "title": "Search ID",
+      "description": "Identifier for a saved search within NetSuite.",
+      "propertyOrder": 10
+    }
+  }
+}
