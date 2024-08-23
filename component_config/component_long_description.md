@@ -1,1 +1,1 @@
-This applications takes in username, api  url, password and other params to externally trigger a boomi job via an API
+This is component connects to Netsuite, download and process data from a saved search and load it into Keboola. 
