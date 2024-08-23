@@ -247,7 +247,7 @@ class Component(ComponentBase):
                 } for record in results
             ]
             df = pd.DataFrame(formatted_data)
-            logging.info(f"Total records fetched: {len(formatted_data)}")
+            logging.info(f"Total records fetched from netsuite: {len(formatted_data)}")
         except Exception as e:
             logging.error(f"An error occurred: {e}")
             return
