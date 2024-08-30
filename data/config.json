@@ -1,0 +1,55 @@
+{
+  "storage": {
+    "input": {
+      "files": [],
+      "tables": [
+        {
+          "source": "in.c-test.test",
+          "destination": "test.csv",
+          "limit": 50,
+          "columns": [],
+          "where_values": [],
+          "where_operator": "eq"
+        }
+      ]
+    },
+    "output": {
+      "files": [],
+      "tables": []
+    }
+  },
+  "parameters": {
+    "keboola_token": "9508-2822462-IgbFYlRscn13HY8iZBvtAq76BOonmDeaxMPOyWTc",
+    "bucket_id": "in.c-NS_SAVE_SEARCHES",
+    "table_name": "customer_notes",
+    "ns_client_key": "1ee1de24b63a61cd8cd0244c28e31ce0aca7e6a5a4d469c256fffe18c95e3124",
+    "ns_client_secret": "2a0dd1a12dcf5f56b37d26e47b811a952103f135009f173ce7f351fa54085976",
+    "ns_resource_owner_key": "96824a52f4091f4f9e6f5624a379e2b2f1ab266b3cd41e578baf4169a721adf1",
+    "ns_resource_owner_secret": "9b84a20a7c28f8605ea3365fa424c81f6d4e2077928c1c1faab80a247fb589d9",
+    "ns_realm": "6780813",
+    "ns_restlet_url": "https://6780813.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=4382&deploy=1",
+    "ns_searchID": 12644
+  },
+  "action": "run",
+  "image_parameters": {
+    "syrup_url": "https://queue.keboola.com/"
+  },
+  "authorization": {
+    "oauth_api": {
+      "id": "OAUTH_API_ID",
+      "credentials": {
+        "id": "main",
+        "authorizedFor": "Myself",
+        "creator": {
+          "id": "1234",
+          "description": "me@keboola.com"
+        },
+        "created": "2016-01-31 00:13:30",
+        "#data": "{\"refresh_token\":\"XXXXX-TOKEN\"}",
+        "oauthVersion": "2.0",
+        "appKey": "12345",
+        "#appSecret": "123qwe-CiN"
+      }
+    }
+  }
+}
